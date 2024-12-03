@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Movies</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <h1>Movie Platform</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h2>Browse Movies</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Director</th>
+            <th>Genre</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% movies.forEach(movie => { %>
+            <tr>
+                <td><%= movie.title %></td>
+                <td><%= new Date(movie.release_date).toLocaleDateString() %></td>
+                <td><%= movie.director %></td>
+                <td><%= movie.genre_name || 'N/A' %></td>
+                <td>
+                    <a href="/movies/details/<%= movie.movie_id %>" class="button">View Details</a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform</p>
+</footer>
+</body>
+</html>

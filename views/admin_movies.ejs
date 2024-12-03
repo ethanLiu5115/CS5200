@@ -1,0 +1,85 @@
+<!--views/admin_movies.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Movies</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <h1>Admin Panel - Manage Movies</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/admin/users">Manage Users</a>
+            <a href="/admin/reviews">Manage Reviews</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h2>Movie List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Director</th>
+            <th>Genre</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% movies.forEach(movie => { %>
+            <tr>
+                <td><%= movie.title %></td>
+                <td><%= new Date(movie.release_date).toLocaleDateString() %></td>
+                <td><%= movie.director %></td>
+                <td><%= movie.genre_name || 'N/A' %></td>
+                <td>
+                    <form method="POST" action="/admin/movies/delete/<%= movie.movie_id %>" style="display: inline;">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                    <a href="/admin/movies/edit/<%= movie.movie_id %>" class="button">Edit</a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <h2>Add New Movie</h2>
+    <form method="POST" action="/admin/movies/add">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="release_date">Release Date:</label>
+            <input type="date" id="release_date" name="release_date" required>
+        </div>
+        <div class="form-group">
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="genre_id">Genre:</label>
+            <select id="genre_id" name="genre_id" required>
+                <option value="" disabled selected>Select Genre</option>
+                <% genres.forEach(genre => { %>
+                    <option value="<%= genre.genre_id %>"><%= genre.genre_name %></option>
+                <% }); %>
+            </select>
+        </div>
+        <button type="submit">Add Movie</button>
+    </form>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform</p>
+</footer>
+</body>
+</html>

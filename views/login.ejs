@@ -1,0 +1,46 @@
+<!--views/login.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <h1>Login</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/auth/register">Register</a>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h2>Login to Your Account</h2>
+    <% if (error) { %>
+        <div class="error-message">
+            <p><%= error %></p>
+        </div>
+    <% } %>
+    <form method="POST" action="/auth/login" class="auth-form">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+        </div>
+        <button type="submit" class="button">Login</button>
+    </form>
+    <p class="form-footer">
+        Don't have an account? <a href="/auth/register">Register here</a>
+    </p>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform. All rights reserved.</p>
+</footer>
+</body>
+</html>

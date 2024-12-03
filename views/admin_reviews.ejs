@@ -1,0 +1,59 @@
+<!--views/admin_reviews.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Reviews</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <h1>Admin Panel - Manage Reviews</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/admin/movies">Manage Movies</a>
+            <a href="/admin/users">Manage Users</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h2>Review List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Review ID</th>
+            <th>User</th>
+            <th>Movie</th>
+            <th>Review Text</th>
+            <th>Rating</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% reviews.forEach(review => { %>
+            <tr>
+                <td><%= review.review_id %></td>
+                <td><%= review.username %></td>
+                <td><%= review.movie_title %></td>
+                <td><%= review.review_text %></td>
+                <td><%= review.rating %></td>
+                <td><%= review.status_name %></td>
+                <td>
+                    <form method="POST" action="/admin/reviews/delete/<%= review.review_id %>" style="display: inline;">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform</p>
+</footer>
+</body>
+</html>

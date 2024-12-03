@@ -1,0 +1,48 @@
+<!--views/details.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= movie.title %> - Movie Details</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <h1><%= movie.title %></h1>
+</header>
+<div class="container">
+    <div class="back-button">
+        <a href="/movies/browse" class="button">← Back to Browse</a>
+    </div>
+    <div class="movie-details">
+        <p><strong>Director:</strong> <%= movie.director %></p>
+        <p><strong>Release Date:</strong> <%= new Date(movie.release_date).toLocaleDateString() %></p>
+        <p><strong>Genre:</strong> <%= movie.genre_name || 'N/A' %></p>
+        <p><strong>Description:</strong> <%= movie.description || 'No description available.' %></p>
+    </div>
+    <h2>Reviews and Ratings</h2>
+    <div class="reviews">
+        <% if (reviews.length > 0) { %>
+            <% reviews.forEach(review => { %>
+                <div class="review">
+                    <p><strong><%= review.username || 'Anonymous' %></strong> rated it <%= review.rating_value || 'No rating' %>/5</p>
+                    <p><%= review.review_text %></p>
+                    <p class="timestamp"><%= new Date(review.created_at).toLocaleString() %></p>
+                    <% if (session.user && session.user.role === 'admin') { %>
+                        <form method="POST" action="/reviews/<%= review.review_id %>/delete" style="display:inline;">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No reviews yet. Be the first to leave one!</p>
+        <% } %>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform</p>
+</footer>
+</body>
+</html>

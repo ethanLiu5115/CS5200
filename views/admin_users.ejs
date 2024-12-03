@@ -1,0 +1,64 @@
+<!--views/admin_users.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Users</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <h1>Admin Panel - Manage Users</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/admin/movies">Manage Movies</a>
+            <a href="/admin/reviews">Manage Reviews</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h2>User List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.user_id %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role %></td>
+                <td><%= new Date(user.created_at).toLocaleDateString() %></td>
+                <td>
+                    <form method="POST" action="/admin/users/edit-role/<%= user.user_id %>" style="display: inline;">
+                        <select name="role">
+                            <option value="guest" <%= user.role === 'guest' ? 'selected' : '' %>>Guest</option>
+                            <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                        </select>
+                        <button type="submit" class="button">Update</button>
+                    </form>
+                    <form method="POST" action="/admin/users/delete/<%= user.user_id %>" style="display: inline;">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!--views/home.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <h1>Welcome to the Movie Review Platform</h1>
+        <nav>
+            <a href="/">Home</a>
+            <% if (session && session.user) { %>
+                <a href="/profile">My Profile</a>
+                <% if (session.user.role === 'admin') { %>
+                    <a href="/admin/reviews">Manage Reviews</a>
+                    <a href="/admin/users">Manage Users</a>
+                    <a href="/admin/movies">Manage Movies</a>
+                <% } %>
+                <form method="GET" action="/auth/logout" class="logout-form">
+                    <button type="submit" class="button logout-button">Logout</button>
+                </form>
+            <% } else { %>
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+            <% } %>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h2>Main Features</h2>
+    <div class="features">
+        <div class="feature">
+            <a href="/movies/browse" class="button">Browse Movies</a>
+        </div>
+        <div class="feature">
+            <a href="/movies/search" class="button">Search Movies</a>
+        </div>
+        <% if (session.user && session.user.role === 'admin') { %>
+            <div class="feature">
+                <a href="/admin/reviews" class="button">Manage Reviews</a>
+            </div>
+            <div class="feature">
+                <a href="/admin/users" class="button">Manage Users</a>
+            </div>
+            <div class="feature">
+                <a href="/admin/movies" class="button">Manage Movies</a>
+            </div>
+        <% } %>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform. All rights reserved.</p>
+</footer>
+</body>
+</html>

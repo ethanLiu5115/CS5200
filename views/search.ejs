@@ -1,0 +1,63 @@
+<!--views/search.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Movies</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <h1>Search Movies</h1>
+</header>
+<div class="container">
+    <div class="back-button">
+        <a href="/" class="button">← Back to Homepage</a>
+    </div>
+    <form method="GET" action="/movies/search">
+        <input type="text" name="title" placeholder="Search by title..." value="<%= searchQuery %>">
+        <input type="text" name="genre" placeholder="Search by genre..." value="<%= genreQuery %>">
+        <button type="submit">Search</button>
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Director</th>
+            <th>Genre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (movies.length > 0) { %>
+            <% movies.forEach(movie => { %>
+                <tr>
+                    <td>
+                        <a href="/movies/details/<%= movie.movie_id %>" class="movie-link">
+                            <%= movie.title %>
+                        </a>
+                    </td>
+                    <td><%= new Date(movie.release_date).toLocaleDateString() %></td>
+                    <td><%= movie.director %></td>
+                    <td><%= movie.genre_name || 'N/A' %></td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="4" style="text-align: center;">No movies found</td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <a class="<%= currentPage === i ? 'active' : '' %>" href="/movies/search?page=<%= i %>&title=<%= searchQuery %>&genre=<%= genreQuery %>"><%= i %></a>
+        <% } %>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 Movie Review Platform</p>
+</footer>
+</body>
+</html>
